@@ -1,51 +1,51 @@
 import React, { useState, useEffect } from 'react';
 import { Deck, AppMode } from './types';
-import { SYSTEM_DECK, Icons } from './constants';
+import { Icons } from './constants';
 import DeckBuilder from './components/DeckBuilder';
 import FlashcardMode from './components/FlashcardMode';
 import QuizMode from './components/QuizMode';
 import ReadingMode from './components/ReadingMode';
-
-const STORAGE_KEY = 'lexiflow_decks_v1';
+import { fetchAllDecks, createDeck, deleteDeck } from './services/supabase';
 
 const App: React.FC = () => {
   const [mode, setMode] = useState<AppMode>(AppMode.DASHBOARD);
-  
-  // Initialize state from LocalStorage (Database simulation)
-  const [decks, setDecks] = useState<Deck[]>(() => {
-    try {
-      const savedData = localStorage.getItem(STORAGE_KEY);
-      if (savedData) {
-        const parsedDecks = JSON.parse(savedData);
-        // Ensure SYSTEM_DECK is always available/updated or handle migration if needed
-        // For now, if we have saved data, return it.
-        return parsedDecks;
-      }
-    } catch (error) {
-      console.error("Failed to load data from storage:", error);
-    }
-    // Default fallback
-    return [SYSTEM_DECK];
-  });
-
+  const [decks, setDecks] = useState<Deck[]>([]);
   const [selectedDeckId, setSelectedDeckId] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  // Save to LocalStorage whenever 'decks' state changes
+  // Load decks from Supabase on mount
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(decks));
-  }, [decks]);
+    loadDecks();
+  }, []);
+
+  const loadDecks = async () => {
+    setLoading(true);
+    const fetchedDecks = await fetchAllDecks();
+    setDecks(fetchedDecks);
+    setLoading(false);
+  };
 
   const activeDeck = decks.find((d) => d.id === selectedDeckId);
 
-  const handleCreateDeck = (newDeck: Deck) => {
-    setDecks((prev) => [...prev, newDeck]);
-    setMode(AppMode.DASHBOARD);
+  const handleCreateDeck = async (newDeck: Deck) => {
+    const success = await createDeck(newDeck);
+    if (success) {
+      await loadDecks(); // Reload from database
+      setMode(AppMode.DASHBOARD);
+    } else {
+      alert('Failed to create deck. Please check your internet connection.');
+    }
   };
 
-  const handleDeleteDeck = (e: React.MouseEvent, deckId: string) => {
+  const handleDeleteDeck = async (e: React.MouseEvent, deckId: string) => {
     e.stopPropagation();
     if (window.confirm("Are you sure you want to delete this deck?")) {
-      setDecks((prev) => prev.filter(d => d.id !== deckId));
+      const success = await deleteDeck(deckId);
+      if (success) {
+        await loadDecks(); // Reload from database
+      } else {
+        alert('Failed to delete deck. Please check your internet connection.');
+      }
     }
   };
 
@@ -62,7 +62,13 @@ const App: React.FC = () => {
         <p className="text-slate-500">Master English vocabulary with generative context.</p>
       </header>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {loading ? (
+        <div className="text-center py-20">
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+          <p className="mt-4 text-slate-600">Loading your decks...</p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {/* Create New Deck Card */}
         <button
           onClick={() => setMode(AppMode.DECK_BUILDER)}
@@ -130,7 +136,8 @@ const App: React.FC = () => {
             </div>
           </div>
         ))}
-      </div>
+        </div>
+      )}
     </div>
   );
 

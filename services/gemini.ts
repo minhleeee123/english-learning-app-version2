@@ -1,10 +1,15 @@
 import { GoogleGenAI, Type, Schema } from "@google/genai";
 import { WordData, ReadingSessionData } from '../types';
 
-const apiKey = process.env.API_KEY || '';
+const apiKey = import.meta.env.VITE_GEMINI_API_KEY || '';
 
 // We reuse a single instance if possible, or create on demand to ensure we catch env vars
-const getAI = () => new GoogleGenAI({ apiKey });
+const getAI = () => {
+  if (!apiKey) {
+    throw new Error('Gemini API key is not configured. Please add VITE_GEMINI_API_KEY to your .env file.');
+  }
+  return new GoogleGenAI({ apiKey });
+};
 
 // ---------------------------------------------------------
 // AGENT 1: Vocabulary Processing
