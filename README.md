@@ -1,148 +1,165 @@
 <div align="center">
 <img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+
+# 🎓 LexiFlow AI
+
+> Master English vocabulary with AI-powered flashcards, quizzes, and contextual reading
+
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB)](https://reactjs.org/)
+[![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=flat&logo=supabase&logoColor=white)](https://supabase.com/)
+[![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white)](https://vitejs.dev/)
+
+[🚀 Live Demo](https://minhleeee123.github.io/english-learning-app-version2/) | [📖 Documentation](DEPLOYMENT.md)
+
 </div>
 
-# LexiFlow AI - English Learning App
-
-> Master English vocabulary with AI-powered context generation
-
-![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=typescript&logoColor=white)
-![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB)
-![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white)
-![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=flat&logo=supabase&logoColor=white)
+---
 
 ## ✨ Features
 
-- 📚 **Flashcard Mode**: Study vocabulary with AI-generated definitions
-- 🧩 **Quiz Mode**: Test your knowledge with interactive quizzes
-- 📖 **Reading Mode**: Learn words in context with AI-generated stories
-- 🤖 **AI-Powered**: Uses Google Gemini to generate definitions and examples
-- 💾 **Cloud Database**: Store your decks on Supabase
-- 🎨 **Beautiful UI**: Modern, responsive design with Tailwind CSS
+| Feature | Description |
+|---------|-------------|
+| 📚 **Flashcard Mode** | Study vocabulary with AI-generated definitions in Vietnamese |
+| 🧩 **Quiz Mode** | Test your knowledge with multiple-choice questions |
+| 📖 **Reading Mode** | Learn words in context with AI-generated stories |
+| 🤖 **AI-Powered** | Google Gemini generates definitions, examples, and reading content |
+| 💾 **Cloud Storage** | Decks saved on Supabase PostgreSQL |
+| 📱 **Responsive** | Works on desktop, tablet, and mobile |
 
-## 🚀 Quick Start
+---
 
-### Prerequisites
-- Node.js 18+ 
-- npm or yarn
-- Supabase account (free)
-- Google Gemini API key (free)
+## 🚀 Quick Start (5 minutes)
 
-### Installation
+### 1️⃣ **Clone & Install**
+```bash
+git clone https://github.com/minhleeee123/english-learning-app-version2.git
+cd english-learning-app-version2
+npm install
+```
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/your-username/english-learning-app-version2.git
-   cd english-learning-app-version2
-   ```
+### 2️⃣ **Setup Supabase Database**
+1. Create account at [Supabase](https://supabase.com)
+2. Create new project
+3. Go to **SQL Editor** → Run `supabase-schema.sql`
+4. Copy **Project URL** and **anon key** from Settings → API
 
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
+### 3️⃣ **Configure Environment**
+```bash
+cp .env.example .env
+```
 
-3. **Setup environment variables**
-   
-   Copy `.env.example` to `.env`:
-   ```bash
-   cp .env.example .env
-   ```
-   
-   Then fill in your credentials:
-   ```env
-   VITE_SUPABASE_URL=your_supabase_url
-   VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
-   VITE_GEMINI_API_KEY=your_gemini_api_key
-   ```
+Edit `.env`:
+```env
+VITE_SUPABASE_URL=your_project_url
+VITE_SUPABASE_ANON_KEY=your_anon_key
+VITE_GEMINI_API_KEY=your_gemini_key  # Optional
+```
 
-4. **Setup Supabase database**
-   
-   Run the SQL script in `supabase-schema.sql` in your Supabase SQL Editor
+### 4️⃣ **Run**
+```bash
+npm run dev
+```
+Open http://localhost:3000
 
-5. **Run the app**
-   ```bash
-   npm run dev
-   ```
+---
 
-   Open http://localhost:3000 in your browser
+## 🌐 Live Demo
+
+🔗 **Website:** https://minhleeee123.github.io/english-learning-app-version2/
+
+---
 
 ## 📦 Deployment
 
-See [DEPLOYMENT.md](DEPLOYMENT.md) for detailed deployment instructions for:
-- ✅ Vercel (Recommended)
-- ✅ Netlify
-- ✅ GitHub Pages
+### ✅ Vercel (Already deployed)
+Your app is live on Vercel!
 
-## 🏗️ Tech Stack
+### ✅ GitHub Pages (Auto-deploy enabled)
+Push to main branch → Auto deploy:
+```bash
+git push origin main
+```
 
-- **Frontend**: React 19 + TypeScript
-- **Build Tool**: Vite 6
-- **Styling**: Tailwind CSS (via CDN)
-- **Database**: Supabase (PostgreSQL)
-- **AI**: Google Gemini API
-- **Deployment**: Vercel/Netlify
+URL: `https://minhleeee123.github.io/english-learning-app-version2/`
+
+---
 
 ## 📁 Project Structure
 
 ```
 english-learning-app-version2/
+├── src/                    # Source code
+│   ├── components/         # React components
+│   ├── services/           # API services  
+│   ├── App.tsx            # Main app
+│   ├── types.ts           # TypeScript types
+│   └── constants.ts       # Constants
+├── database/              # SQL schemas
+├── .github/workflows/     # GitHub Actions
+├── index.html             # Entry HTML
+└── vite.config.ts         # Vite config
+```
+
+---
+
+## 🏗️ Tech Stack
+
+- **Frontend:** React 19 + TypeScript + Vite
+- **Styling:** Tailwind CSS (CDN)
+- **Database:** Supabase (PostgreSQL)
+- **AI:** Google Gemini API
+- **CI/CD:** GitHub Actions
+
+---
+
+## 📁 Project Structure
+
+```
 ├── components/          # React components
 │   ├── DeckBuilder.tsx
 │   ├── FlashcardMode.tsx
 │   ├── QuizMode.tsx
 │   └── ReadingMode.tsx
-├── services/           # API services
-│   ├── gemini.ts      # Gemini AI integration
-│   └── supabase.ts    # Supabase client & CRUD
-├── App.tsx            # Main app component
-├── types.ts           # TypeScript definitions
-├── constants.ts       # App constants
-├── supabase-schema.sql # Database schema
-├── DEPLOYMENT.md      # Deployment guide
-└── .env.example       # Environment variables template
+├── services/           # API integrations
+│   ├── gemini.ts       # Gemini AI
+│   └── supabase.ts     # Supabase CRUD
+├── App.tsx             # Main app
+├── supabase-schema.sql # Database setup
+└── .env.example        # Config template
 ```
 
-## 🔑 Getting API Keys
+---
 
-### Supabase
-1. Go to https://supabase.com
-2. Create a new project
-3. Go to Settings → API
-4. Copy the Project URL and anon/public key
+## 🔑 Get API Keys
 
-### Google Gemini
-1. Go to https://aistudio.google.com/app/apikey
-2. Click "Create API Key"
-3. Copy the key
+| Service | URL | Free Tier |
+|---------|-----|-----------|
+| **Supabase** | https://supabase.com | 500MB DB |
+| **Gemini** | https://aistudio.google.com/app/apikey | 60 requests/min |
+
+---
 
 ## 🛠️ Development
 
 ```bash
-# Install dependencies
-npm install
-
-# Run development server
-npm run dev
-
-# Build for production
-npm run build
-
-# Preview production build
-npm run preview
+npm run dev      # Dev server
+npm run build    # Production build
+npm run preview  # Preview build
 ```
-
-## 📝 License
-
-MIT License - feel free to use this project for learning purposes!
-
-## 🤝 Contributing
-
-Contributions are welcome! Feel free to open issues or submit pull requests.
-
-## 📧 Contact
-
-Created by [Your Name] - [Your Email]
 
 ---
 
-**⭐ If you find this useful, please give it a star!**
+## 📝 License
+
+MIT License - Free for personal and commercial use
+
+---
+
+<div align="center">
+
+**Made with ❤️ by minhleeee123**
+
+⭐ **Star this repo if you find it helpful!** ⭐
+
+</div>
